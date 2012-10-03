@@ -1,0 +1,35 @@
+.container {
+	overflow: hidden;
+}
+
+.container > ul,
+.container .slides > li {
+	width: 955px;
+	height: 316px;
+}
+
+.container ul {
+	overflow: hidden;
+	padding: 0px;
+	margin: 0px;
+}
+
+.container .slides > li {
+	list-style: none;
+	display: none;
+}
+
+.container .slider-paginacao ul {
+	overflow: hidden;
+}
+
+.container .slider-paginacao li {
+	float: left;
+	display: block;
+	margin-right: 10px;
+}
+
+.container .slider-paginacao .ativo {
+	font-size: 20px;
+	font-weight: bold;
+}
