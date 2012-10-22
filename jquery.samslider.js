@@ -30,12 +30,12 @@
 					if(configuracao.auto) Slider.auto_carrossel();
 
 					$botao_proximo.on('click', function(){
-						Slider.ir_para_proximo(true);
+						Slider.ir_para_proximo(configuracao.carrossel);
 						return false;
 					});
 					
 					$botao_anterior.on('click', function(){
-						Slider.ir_para_anterior(true);
+						Slider.ir_para_anterior(configuracao.carrossel);
 						return false;
 					});
 				},
