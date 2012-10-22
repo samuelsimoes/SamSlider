@@ -102,10 +102,7 @@
 					var $index_item_visivel = Slider.slide_visivel.index();
 					var $item_anterior = $slides.eq($index_item_visivel-1);
 
-					if(circular)
-						Slider.mostrar_item($index_item_visivel-1);
-					else if ($index_item_visivel != 0)
-						Slider.mostrar_item($index_item_visivel-1);
+					Slider.mostrar_item($item_anterior.index());
 				},
 
 				auto_carrossel: function()
