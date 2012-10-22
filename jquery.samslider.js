@@ -104,7 +104,7 @@
 
 					if(circular)
 						Slider.mostrar_item($index_item_visivel-1);
-					else if (index_item_visivel != 0)
+					else if ($index_item_visivel != 0)
 						Slider.mostrar_item($index_item_visivel-1);
 				},
 
