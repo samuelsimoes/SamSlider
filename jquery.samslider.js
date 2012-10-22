@@ -18,7 +18,7 @@
 			var $botao_anterior = $container.find(configuracao.botao_anterior);
 			var $ctn_paginacao = $container.find(configuracao.paginacao_ctn_class);
 			var $slides_ctn = $container.find(configuracao.slides_ctn);
-			var $slides = $slides_ctn.find('li');
+			var $slides = $slides_ctn.children('li');
 
 			var Slider = {
 
