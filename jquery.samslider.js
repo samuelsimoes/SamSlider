@@ -1,22 +1,24 @@
 (function($){
-	$.fn.samSlider = function(opcoes){
-		var configuracao = $.extend( {
-			botao_anterior: '.slider-btn-anterior',
-			botao_proximo: '.slider-btn-proximo',
+	$.fn.samSlider = function( options ) {
+
+		var config = $.extend( {
+			previous_button: '.previous-btn',
+			next_button: '.next-btn',
 			auto: true,
-			velocidade: 2000,
-			paginacao: true,
-			paginacao_ctn_class: '.slider-paginacao',
-			carrossel: false,
-			slides_ctn: '.slides'
-		}, opcoes);
+			speed: 2000,
+			pagination: true,
+			pagination_container: '.pagination-ctn',
+			circular: true,
+			slides_container: '.slides',
+			slide_selector: 'li'
+		}, options );
 
 		var $container = $(this);
-		var $botao_proximo = $container.find(configuracao.botao_proximo);
-		var $botao_anterior = $container.find(configuracao.botao_anterior);
-		var $ctn_paginacao = $container.find(configuracao.paginacao_ctn_class);
-		var $slides_ctn = $container.find(configuracao.slides_ctn);
-		var $slides = $slides_ctn.children('li');
+		var $nextButton = $container.find(config.next_button);
+		var $previousButton = $container.find(config.previous_button);
+		var $paginationContainer = $container.find(config.pagination_container);
+		var $slidesContainer = $container.find(config.slides_container);
+		var $slides = $slideContainer.children(config.slide_selector);
 
 		var Slider = {
 
