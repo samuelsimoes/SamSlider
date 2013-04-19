@@ -18,115 +18,124 @@
 		var $previousButton = $container.find(config.previous_button);
 		var $paginationContainer = $container.find(config.pagination_container);
 		var $slidesContainer = $container.find(config.slides_container);
-		var $slides = $slideContainer.children(config.slide_selector);
+		var $slides = $slidesContainer.children(config.slide_selector);
 
-		var Slider = {
+		var SliderModule = ( function() {
+			// Module
+			var m = {};
+			
+			m.init = function() {
+				m.showItem(0);
+				buildPagination();
+				attachControlsClickHandler();
 
-			init: function()
-			{
-				Slider.mostrar_item(0);
-				Slider.montar_paginacao();
+				if(config.auto) carousel();
 
-				if(configuracao.auto) Slider.auto_carrossel();
+				return m;
+			};
 
-				$botao_proximo.on('click', function(){
-					Slider.ir_para_proximo(configuracao.carrossel);
-					return false;
-				});
-				
-				$botao_anterior.on('click', function(){
-					Slider.ir_para_anterior(configuracao.carrossel);
-					return false;
-				});
-			},
+			m.goToNextSlide = function() {
 
-			montar_paginacao: function()
-			{
-				$ctn_paginacao.html('<ul></ul>');
-				var $ul = $ctn_paginacao.find('ul');
+				var $visibleItemIndex = m.visibleSlide.index();
+				var $nextSlide = $slides.eq($visibleItemIndex+1);
 
-				$slides.each(function(i){
-					$ul.append('<li><a href="#">'+(i++)+'</a></li>');
-				});
+				if($nextSlide.length > 0)
+					m.showItem($visibleItemIndex+1);
+				else if (config.circular && $nextSlide.length == 0)
+					m.showItem(0);
+			};
 
-				$ul.find('li:eq(0)').addClass('ativo');
+			m.goToPreviousSlide = function() {
 
-				Slider.manejar_paginacao_click();
-			},
+				var $visibleItemIndex = m.visibleSlide.index();
+				var $previousSlide = $slides.eq($visibleItemIndex-1);
 
-			manejar_paginacao_click: function()
-			{
-				$ctn_paginacao.on('click', 'a', function(){
-					var $li = $(this).parents('li');
-					Slider.mostrar_item($li.index());
-					return false;
-				});
-			},
+				m.showItem($previousSlide.index());
 
-			mostrar_item: function(index)
-			{
-				var $slide_visivel = $slides.filter(':visible');
+			};
 
-				//Se não for o item que já está visível faz as devidas mudanças
-				if($slide_visivel.index() != index) {
+			m.showItem = function (slide_index) {
 
-					$slide_visivel.fadeOut(250);
-					$slides.eq(index).delay(250).fadeIn(500);
+				var $visibleSlide = $slides.filter(':visible');
 
-					Slider.slide_visivel = $slides.eq(index);
+				if($visibleSlide.index() != slide_index) {
 
-					$ctn_paginacao.find('li.ativo').removeClass('ativo');
-					$ctn_paginacao.find('li:eq('+index+')').addClass('ativo');
+					$visibleSlide.fadeOut(250);
+					$slides.eq(slide_index).delay(250).fadeIn(500);
+
+					m.visibleSlide = $slides.eq(slide_index);
+
+					$paginationContainer.find('.active').removeClass('active');
+					$paginationContainer.find(':eq('+slide_index+')').addClass('active');
 				}
-			},
+			};
 
-			/**
-			 * Funções responsáveis por mostrar o próximo slide ou o anterior.
-			 * 
-			 * @param  {bool}  circular  Caso esteja no último ou primeiro slode
-			 * faz o "retorno" para o primeiro ou último, respectivamente.
-			 */
-			ir_para_proximo: function(circular)
-			{
-				var $index_item_visivel = Slider.slide_visivel.index();
-				var $proximo_item = $slides.eq($index_item_visivel+1);
+			var buildPagination = function() {
 
-				if($proximo_item.length > 0)
-					Slider.mostrar_item($index_item_visivel+1);
-				else if (circular && $proximo_item.length == 0)
-					Slider.mostrar_item(0);
-			},
+				$paginationContainer.html('<ul></ul>');
 
-			ir_para_anterior: function(circular)
-			{
-				var $index_item_visivel = Slider.slide_visivel.index();
-				var $item_anterior = $slides.eq($index_item_visivel-1);
+				var $pagination = $paginationContainer.find('ul');
 
-				Slider.mostrar_item($item_anterior.index());
-			},
+				$slides.each( function(i) {
+					$pagination.append('<li><a href="#">'+(i++)+'</a></li>');
+				});
 
-			auto_carrossel: function()
-			{
-				$botao_anterior.on('click', iniciar_carrossel);
-				$botao_proximo.on('click', iniciar_carrossel);
-				$ctn_paginacao.on('click', 'a', iniciar_carrossel);
+				$pagination.find('li:eq(0)').addClass('active');
+
+				attachPaginationClickHandler();
+
+			};
+
+			var attachPaginationClickHandler = function() {
+
+				$paginationContainer.on('click', 'a', function() {
+					var $pageCtn = $(this).parents('li');
+
+					m.showItem($pageCtn.index());
+
+					return false;
+				});
+
+			};
+
+			var attachControlsClickHandler = function() {
+
+				$nextButton.on('click', function() {
+					m.goToNextSlide();
+					return false;
+				});
+
+				$previousButton.on('click', function() {
+					m.goToPreviousSlide();
+					return false;
+				});
+
+			};
+
+			var carousel =  function() {
+
+				$nextButton.on('click', startCarousel);
+				$previousButton.on('click', startCarousel);
+				$paginationContainer.on('click', 'a', startCarousel);
 
 				//Para o Slider quando o mouse passa pelo slider.
 				$slides
-					.mouseenter(function(){clearInterval(Slider.auto_carrossel_func)})
-					.mouseleave(iniciar_carrossel);
+					.mouseenter(function(){ clearInterval(m.carouselRotator); })
+					.mouseleave(startCarousel);
 
-				function iniciar_carrossel()
+				function startCarousel()
 				{
-					clearInterval(Slider.auto_carrossel_func);
+					clearInterval(m.carouselRotator);
 
-					Slider.auto_carrossel_func = setInterval(function(){
-						Slider.ir_para_proximo(true);
-					}, configuracao.velocidade);
+					m.carouselRotator = setInterval( function() {
+						m.goToNextSlide();
+					}, config.speed );
 				}
-				iniciar_carrossel();
+
+				startCarousel();
 			}
-		}
-		Slider.init();
+
+			return m.init();
+		})();
 	}
 })(jQuery);
