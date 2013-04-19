@@ -43,6 +43,8 @@
 					m.showItem($visibleItemIndex+1);
 				else if (config.circular && $nextSlide.length == 0)
 					m.showItem(0);
+
+				if(config.auto) startCarousel();
 			};
 
 			m.goToPreviousSlide = function() {
@@ -52,6 +54,7 @@
 
 				m.showItem($previousSlide.index());
 
+				if(config.auto) startCarousel();
 			};
 
 			m.showItem = function (slide_index) {
@@ -67,6 +70,8 @@
 
 					$paginationContainer.find(config.slide_selector+'.active').removeClass('active');
 					$paginationContainer.find(config.slide_selector+':eq('+slide_index+')').addClass('active');
+
+					if(config.auto) startCarousel();
 				}
 			};
 
@@ -114,26 +119,20 @@
 
 			var carousel =  function() {
 
-				$nextButton.on('click', startCarousel);
-				$previousButton.on('click', startCarousel);
-				$paginationContainer.on('click', 'a', startCarousel);
-
-				//Para o Slider quando o mouse passa pelo slider.
 				$slides
 					.mouseenter(function(){ clearInterval(m.carouselRotator); })
 					.mouseleave(startCarousel);
 
-				function startCarousel()
-				{
-					clearInterval(m.carouselRotator);
-
-					m.carouselRotator = setInterval( function() {
-						m.goToNextSlide();
-					}, config.speed );
-				}
-
 				startCarousel();
-			}
+			};
+
+			var startCarousel = function() {
+				clearInterval(m.carouselRotator);
+
+				m.carouselRotator = setInterval( function() {
+					m.goToNextSlide();
+				}, config.speed );
+			};
 
 			return m.init();
 		})();
