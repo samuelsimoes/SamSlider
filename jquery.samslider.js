@@ -77,12 +77,14 @@
 
 			var buildPagination = function() {
 
+				if(!config.pagination) return;
+
 				$paginationContainer.html('<ul></ul>');
 
 				var $pagination = $paginationContainer.find('ul');
 
 				$slides.each( function(i) {
-					$pagination.append('<li><a href="#">'+(i++)+'</a></li>');
+					$pagination.append('<li><a href="#">'+(i+1)+'</a></li>');
 				});
 
 				$pagination.find('li:eq(0)').addClass('active');
