@@ -137,5 +137,17 @@
 
 			return m.init();
 		})();
+
+		return {
+			goToNextSlide: function() {
+				SliderModule.goToNextSlide();
+			},
+			goToPreviousSlide: function() {
+				SliderModule.goToPreviousSlide();
+			},
+			goToSlide: function(slide_index) {
+				SliderModule.showItem(slide_index);
+			}
+		};
 	}
 })(jQuery);
