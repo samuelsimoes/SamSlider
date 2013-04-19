@@ -65,8 +65,8 @@
 
 					m.visibleSlide = $slides.eq(slide_index);
 
-					$paginationContainer.find('.active').removeClass('active');
-					$paginationContainer.find(':eq('+slide_index+')').addClass('active');
+					$paginationContainer.find(config.slide_selector+'.active').removeClass('active');
+					$paginationContainer.find(config.slide_selector+':eq('+slide_index+')').addClass('active');
 				}
 			};
 
