@@ -10,7 +10,8 @@
 			pagination_container: '.pagination-ctn',
 			circular: true,
 			slides_container: '.slides',
-			slide_selector: 'li'
+			slide_selector: 'li',
+			on_change_hook: function(index) {}
 		}, options );
 
 		var $container = $(this);
@@ -72,6 +73,8 @@
 					$paginationContainer.find(config.slide_selector+':eq('+slide_index+')').addClass('active');
 
 					if(config.auto) startCarousel();
+
+					config.on_change_hook(slide_index);
 				}
 			};
 
@@ -152,3 +155,5 @@
 		};
 	}
 })(jQuery);
+
+
