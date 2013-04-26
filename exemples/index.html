@@ -3,12 +3,20 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<title>Sam Slider Exemplo</title>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://localhost:3000/assets/jquery.js?body=1"></script>
 	<script type="text/javascript" src="../jquery.samslider.js"></script>
 	<script type="text/javascript">
 	jQuery(document).ready(function($){
-		$('#vitrine1').samSlider({
-			paginacao: true
+		window.slider = $('#vitrine1').samSlider({
+			previous_button: '.previous-btn',
+			next_button: '.next-btn',
+			auto: true,
+			speed: 2000,
+			pagination: true,
+			pagination_container: '.pagination-ctn',
+			circular: true,
+			slides_container: '.slides',
+			slide_selector: 'li'
 		});
 	})
 	</script>
@@ -28,11 +36,11 @@
 				</ul>
 			</li>
 		</ul>
-		<div class="slider-paginacao">
+		<div class="pagination-ctn">
 		</div>
-		<div class="nav_butons">
-			<a href="#" class="slider-btn-anterior">< Slide Anterior</a>
-			<a href="#" class="slider-btn-proximo">Slide Próximo ></a>
+		<div class="controls">
+			<a href="#" class="previous-btn">Slide Anterior</a>
+			<a href="#" class="next-btn">Slide Próximo</a>
 		</div>
 	</div>
 </body>
