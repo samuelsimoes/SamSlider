@@ -2,24 +2,24 @@
   $.fn.samSlider = function( options ) {
 
     var config = $.extend( {
-      previous_button: '.previous-btn',
-      next_button: '.next-btn',
+      previousButton: '.previous-btn',
+      nextButton: '.next-btn',
       auto: true,
       speed: 2000,
       pagination: true,
-      pagination_container: '.pagination-ctn',
+      paginationContainer: '.pagination-ctn',
       circular: true,
-      slides_container: '.slides',
-      slide_selector: 'li',
-      on_change_hook: function(index) {}
+      slidesContainer: '.slides',
+      slideSelector: 'li',
+      onChangeHook: function(index) {}
     }, options );
 
     var $container = $(this);
-    var $nextButton = $container.find(config.next_button);
-    var $previousButton = $container.find(config.previous_button);
-    var $paginationContainer = $container.find(config.pagination_container);
-    var $slidesContainer = $container.find(config.slides_container);
-    var $slides = $slidesContainer.children(config.slide_selector);
+    var $nextButton = $container.find(config.nextButton);
+    var $previousButton = $container.find(config.previousButton);
+    var $paginationContainer = $container.find(config.paginationContainer);
+    var $slidesContainer = $container.find(config.slidesContainer);
+    var $slides = $slidesContainer.children(config.slideSelector);
 
     var SliderModule = (function() {
       // Module
@@ -57,22 +57,22 @@
         if(config.auto) startCarousel();
       };
 
-      m.showItem = function (slide_index) {
+      m.showItem = function (slideIndex) {
         var $visibleSlide = $slides.filter(':visible');
 
-        if($visibleSlide.index() != slide_index) {
+        if($visibleSlide.index() != slideIndex) {
 
           $visibleSlide.fadeOut(250);
-          $slides.eq(slide_index).delay(250).fadeIn(500);
+          $slides.eq(slideIndex).delay(250).fadeIn(500);
 
-          m.visibleSlide = $slides.eq(slide_index);
+          m.visibleSlide = $slides.eq(slideIndex);
 
-          $paginationContainer.find(config.slide_selector+'.active').removeClass('active');
-          $paginationContainer.find(config.slide_selector+':eq('+slide_index+')').addClass('active');
+          $paginationContainer.find(config.slideSelector+'.active').removeClass('active');
+          $paginationContainer.find(config.slideSelector+':eq('+slideIndex+')').addClass('active');
 
           if(config.auto) startCarousel();
 
-          config.on_change_hook(slide_index);
+          config.onChangeHook(slideIndex);
         }
       };
 
@@ -140,8 +140,8 @@
         goToPreviousSlide: function() {
           SliderModule.goToPreviousSlide();
         },
-        goToSlide: function(slide_index) {
-          SliderModule.showItem(slide_index);
+        goToSlide: function(slideIndex) {
+          SliderModule.showItem(slideIndex);
         }
     };
   }
