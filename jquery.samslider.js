@@ -2,15 +2,15 @@
   $.fn.samSlider = function( options ) {
 
     var config = $.extend( {
-      previousButton: '.previous-btn',
-      nextButton: '.next-btn',
+      previousButton: ".previous-btn",
+      nextButton: ".next-btn",
       auto: true,
       speed: 2000,
       pagination: true,
-      paginationContainer: '.pagination-ctn',
+      paginationContainer: ".pagination-ctn",
       circular: true,
-      slidesContainer: '.slides',
-      slideSelector: 'li',
+      slidesContainer: ".slides",
+      slideSelector: "li",
       onChangeHook: function(index) {}
     }, options );
 
@@ -58,7 +58,7 @@
       };
 
       m.showItem = function (slideIndex) {
-        var $visibleSlide = $slides.filter(':visible');
+        var $visibleSlide = $slides.filter(":visible");
 
         if($visibleSlide.index() != slideIndex) {
 
@@ -67,8 +67,8 @@
 
           m.visibleSlide = $slides.eq(slideIndex);
 
-          $paginationContainer.find(config.slideSelector+'.active').removeClass('active');
-          $paginationContainer.find(config.slideSelector+':eq('+slideIndex+')').addClass('active');
+          $paginationContainer.find(config.slideSelector+".active").removeClass("active");
+          $paginationContainer.find(config.slideSelector+":eq("+slideIndex+")").addClass("active");
 
           if(config.auto) startCarousel();
 
@@ -79,22 +79,22 @@
       var buildPagination = function() {
         if(!config.pagination) return;
 
-        $paginationContainer.html('<ul></ul>');
+        $paginationContainer.html("<ul></ul>");
 
-        var $pagination = $paginationContainer.find('ul');
+        var $pagination = $paginationContainer.find("ul");
 
         $slides.each( function(i) {
-          $pagination.append('<li><a href="#">'+(i+1)+'</a></li>');
+          $pagination.append("<li><a href=\"#\">"+(i+1)+"</a></li>");
         });
 
-        $pagination.find('li:eq(0)').addClass('active');
+        $pagination.find("li:eq(0)").addClass("active");
 
         attachPaginationClickHandler();
       };
 
       var attachPaginationClickHandler = function() {
-        $paginationContainer.on('click', 'a', function() {
-          var $pageCtn = $(this).parents('li');
+        $paginationContainer.on("click", "a", function() {
+          var $pageCtn = $(this).parents("li");
 
           m.showItem($pageCtn.index());
 
@@ -103,12 +103,12 @@
       };
 
       var attachControlsClickHandler = function() {
-        $nextButton.on('click', function() {
+        $nextButton.on("click", function() {
           m.goToNextSlide();
           return false;
         });
 
-        $previousButton.on('click', function() {
+        $previousButton.on("click", function() {
           m.goToPreviousSlide();
           return false;
         });
