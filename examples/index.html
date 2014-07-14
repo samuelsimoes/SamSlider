@@ -1,47 +1,40 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<title>Sam Slider Exemplo</title>
-	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
-	<script type="text/javascript" src="../jquery.samslider.js"></script>
-	<script type="text/javascript">
-	jQuery(document).ready(function($){
-		window.slider = $('#vitrine1').samSlider({
-			previous_button: '.previous-btn',
-			next_button: '.next-btn',
-			auto: true,
-			speed: 2000,
-			pagination: true,
-			pagination_container: '.pagination-ctn',
-			circular: true,
-			slides_container: '.slides',
-			slide_selector: 'li'
-		});
-	})
-	</script>
-	<link rel="stylesheet" type="text/css" href="estilo.css" />
-</head>
-<body>
-	<div class="container" id="vitrine1">
-		<ul class="slides">
-			<li><img src="1.jpeg" alt="" /></li>
-			<li><img src="2.jpeg" alt="" /></li>
-			<li><img src="3.jpeg" alt="" /></li>
-			<li><img src="4.jpeg" alt="" /></li>
-			<li>
-				<strong>HTML</strong>
-				<ul>
-					<li>Listas!</li>
-				</ul>
-			</li>
-		</ul>
-		<div class="pagination-ctn">
-		</div>
-		<div class="controls">
-			<a href="#" class="previous-btn">Slide Anterior</a>
-			<a href="#" class="next-btn">Slide Próximo</a>
-		</div>
-	</div>
-</body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Sam Slider Example</title>
+
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+    <script type="text/javascript" src="../jquery.samslider.js"></script>
+
+    <script type="text/javascript">
+      jQuery(document).ready(function($){
+        $('#slider1').samSlider();
+      });
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div class="container" id="slider1">
+      <div class="slides">
+        <div class="slide"><img src="1.jpeg" alt="" /></div>
+        <div class="slide"><img src="2.jpeg" alt="" /></div>
+        <div class="slide"><img src="3.jpeg" alt="" /></div>
+        <div class="slide"><img src="4.jpeg" alt="" /></div>
+        <div class="slide">
+          <strong>Some HTML here!</strong>
+        </div>
+      </div>
+
+      <div class="pagination-ctn">
+      </div>
+
+      <div class="controls">
+        <a href="#" class="previous-btn">Slide Anterior</a>
+        <a href="#" class="next-btn">Slide Próximo</a>
+      </div>
+    </div>
+  </body>
 </html>

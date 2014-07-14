@@ -1,0 +1,20 @@
+.container .slides,
+.container .slide {
+  width: 640px;
+  height: 300px;
+}
+
+.container .slides {
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
+}
+
+.container .slide {
+  display: none;
+}
+
+.container .pagination-ctn .active {
+  font-size: 20px;
+  font-weight: bold;
+}
