@@ -80,22 +80,22 @@ SamSlider.Controller.prototype = {
 (function($){
   $.fn.samSlider = function(options) {
     var config = $.extend( {
-      previousButton: ".previous-btn",
-      nextButton: ".next-btn",
+      previousButtonSelector: ".previous-btn",
+      nextButtonSelector: ".next-btn",
       auto: true,
       speed: 2000,
       pagination: true,
-      paginationContainer: ".pagination-ctn",
+      paginationContainerSelector: ".pagination-ctn",
       circular: true,
-      slidesContainer: ".slides",
+      slidesContainerSelector: ".slides",
       slideSelector: "li"
     }, options);
 
     var $container = $(this),
-        $nextButton = $container.find(config.nextButton),
-        $previousButton = $container.find(config.previousButton),
-        $paginationContainer = $container.find(config.paginationContainer),
-        $slidesContainer = $container.find(config.slidesContainer),
+        $nextButton = $container.find(config.nextButtonSelector),
+        $previousButton = $container.find(config.previousButtonSelector),
+        $paginationContainer = $container.find(config.paginationContainerSelector),
+        $slidesContainer = $container.find(config.slidesContainerSelector),
         $slides = $slidesContainer.children(config.slideSelector);
 
     var SliderModule = (function() {
