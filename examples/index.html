@@ -10,14 +10,41 @@
 
     <script type="text/javascript">
       jQuery(document).ready(function($){
-        $('#slider1').samSlider();
+        $('#slider1').samSlider({ effect: "fade" });
+        $('#slider2').samSlider();
       });
     </script>
 
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
+    <h1>
+      With fade effect
+    </h1>
     <div class="container" id="slider1">
+      <div class="slides">
+        <div class="slide"><img src="1.jpeg" alt="" /></div>
+        <div class="slide"><img src="2.jpeg" alt="" /></div>
+        <div class="slide"><img src="3.jpeg" alt="" /></div>
+        <div class="slide"><img src="4.jpeg" alt="" /></div>
+        <div class="slide">
+          <strong>Some HTML here!</strong>
+        </div>
+      </div>
+
+      <div class="pagination-ctn">
+      </div>
+
+      <div class="controls">
+        <a href="#" class="previous-btn">Slide Anterior</a>
+        <a href="#" class="next-btn">Slide Próximo</a>
+      </div>
+    </div>
+
+    <h1>
+      With slide effect
+    </h1>
+    <div class="container" id="slider2">
       <div class="slides">
         <div class="slide"><img src="1.jpeg" alt="" /></div>
         <div class="slide"><img src="2.jpeg" alt="" /></div>

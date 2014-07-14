@@ -16,6 +16,36 @@ SamSlider.FadeTransition.prototype = {
   }
 };
 
+SamSlider.SlideTransition = function(rootNode, childrenNodes) {
+  this.nodes = childrenNodes;
+  this.nodeWidth = childrenNodes.first().width();
+  this.rootNode = rootNode;
+  this.markupSetup();
+};
+
+SamSlider.SlideTransition.prototype = {
+  markupSetup: function () {
+    // Wrap all nodes in a single node which will be movemented
+    this.slideNode =
+      $("<div>").
+        html(this.nodes).
+        css("position", "absolute").
+        width(this.nodeWidth * this.nodes.length);
+
+    this.rootNode.html(this.slideNode);
+
+    // All nodes in a single line inside the root node
+    this.nodes.css("display", "inline-block");
+  },
+
+  showNode: function (options) {
+    var xPosition = -(options.nodeToShowIndex * this.nodeWidth);
+    this.slideNode.animate({
+      left: xPosition
+    });
+  }
+};
+
 SamSlider.Controller = function(transitionStrategy, nodesQuantity, options) {
   $.extend(this, {
     options: (options || {}),
@@ -88,7 +118,8 @@ SamSlider.Controller.prototype = {
       paginationContainerSelector: ".pagination-ctn",
       circular: true,
       slidesContainerSelector: ".slides",
-      slideSelector: ".slide"
+      slideSelector: ".slide",
+      effect: "slide"
     }, options);
 
     var $container = $(this),
@@ -98,7 +129,19 @@ SamSlider.Controller.prototype = {
         $slidesContainer = $container.find(options.slidesContainerSelector),
         $slides = $slidesContainer.children(options.slideSelector);
 
-    var transitionStrategy = new SamSlider.FadeTransition($slidesContainer, $slides);
+    var transitionStrategyFactory = function () {
+      var strategy;
+
+      if (options.effect == "fade") {
+        strategy = SamSlider.FadeTransition;
+      } else if (options.effect == "slide") {
+        strategy = SamSlider.SlideTransition;
+      }
+
+      return new strategy($slidesContainer, $slides);
+    };
+
+    var transitionStrategy = transitionStrategyFactory();
 
     var controller =
       new SamSlider.Controller(
