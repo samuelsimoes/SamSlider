@@ -88,8 +88,7 @@ SamSlider.Controller.prototype = {
       paginationContainer: ".pagination-ctn",
       circular: true,
       slidesContainer: ".slides",
-      slideSelector: "li",
-      onChangeHook: function(index) {}
+      slideSelector: "li"
     }, options);
 
     var $container = $(this),
