@@ -132,7 +132,9 @@ SamSlider.Controller.prototype = {
     var transitionStrategyFactory = function () {
       var strategy;
 
-      if (options.effect == "fade") {
+      if (options.customTransitionStrategy) {
+        strategy = options.customTransitionStrategy;
+      } else if (options.effect == "fade") {
         strategy = SamSlider.FadeTransition;
       } else if (options.effect == "slide") {
         strategy = SamSlider.SlideTransition;
