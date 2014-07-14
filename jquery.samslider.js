@@ -92,12 +92,12 @@ SamSlider.Controller.prototype = {
       onChangeHook: function(index) {}
     }, options);
 
-    var $container = $(this);
-    var $nextButton = $container.find(config.nextButton);
-    var $previousButton = $container.find(config.previousButton);
-    var $paginationContainer = $container.find(config.paginationContainer);
-    var $slidesContainer = $container.find(config.slidesContainer);
-    var $slides = $slidesContainer.children(config.slideSelector);
+    var $container = $(this),
+        $nextButton = $container.find(config.nextButton),
+        $previousButton = $container.find(config.previousButton),
+        $paginationContainer = $container.find(config.paginationContainer),
+        $slidesContainer = $container.find(config.slidesContainer),
+        $slides = $slidesContainer.children(config.slideSelector);
 
     var SliderModule = (function() {
       // Module
@@ -170,9 +170,9 @@ SamSlider.Controller.prototype = {
       };
 
       var carousel =  function() {
-        $slides
-          .mouseenter(function(){ clearInterval(m.carouselRotator); })
-          .mouseleave(startCarousel);
+        $slides.
+          mouseenter(function(){ clearInterval(m.carouselRotator); }).
+          mouseleave(startCarousel);
 
         startCarousel();
       };
@@ -199,5 +199,5 @@ SamSlider.Controller.prototype = {
         SliderModule.showItem(slideIndex);
       }
     };
-  }
+  };
 })(jQuery);
