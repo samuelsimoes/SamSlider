@@ -1,6 +1,84 @@
-(function($){
-  $.fn.samSlider = function( options ) {
+SamSlider = {};
 
+SamSlider.FadeTransition = function(rootNode, childrenNodes) {
+  this.nodes = childrenNodes;
+};
+
+SamSlider.FadeTransition.prototype = {
+  showNode: function (options) {
+    var nodeToShow = this.nodes.eq(options.nodeToShowIndex);
+
+    if (typeof options.visibleNodeIndex != "undefined") {
+      this.nodes.eq(options.visibleNodeIndex).fadeOut(250);
+    }
+
+    nodeToShow.delay(250).fadeIn(500);
+  }
+};
+
+SamSlider.Controller = function(transitionStrategy, nodesQuantity, options) {
+  $.extend(this, {
+    options: (options || {}),
+    transitionStrategy: transitionStrategy,
+    nodesQuantity: nodesQuantity
+  });
+};
+
+SamSlider.Controller.prototype = {
+  showPreviousNode: function () {
+    var previousNodeIndex = (this.visibleNodeIndex - 1),
+        isFirstSlide = (previousNodeIndex < 0);
+
+    if (isFirstSlide) {
+      if (this.options.circular) {
+        previousNodeIndex = (this.nodesQuantity - 1);
+      } else {
+        return;
+      }
+    }
+
+    this.transitionStrategy.showNode({
+      nodeToShowIndex: previousNodeIndex,
+      visibleNodeIndex: this.visibleNodeIndex
+    });
+
+    this.visibleNodeIndex = previousNodeIndex;
+  },
+
+  showNextNode: function () {
+    var nextNodeIndex = (this.visibleNodeIndex + 1),
+        isLastSlide = (nextNodeIndex == this.nodesQuantity);
+
+    if (isLastSlide) {
+      if (this.options.circular) {
+        nextNodeIndex = 0;
+      } else {
+        return;
+      }
+    }
+
+    this.transitionStrategy.showNode({
+      nodeToShowIndex: nextNodeIndex,
+      visibleNodeIndex: this.visibleNodeIndex
+    });
+
+    this.visibleNodeIndex = nextNodeIndex;
+  },
+
+  showNode: function (index) {
+    if (index == this.visibleNodeIndex) { return; }
+
+    this.transitionStrategy.showNode({
+      nodeToShowIndex: index,
+      visibleNodeIndex: this.visibleNodeIndex
+    });
+
+    this.visibleNodeIndex = index;
+  }
+};
+
+(function($){
+  $.fn.samSlider = function(options) {
     var config = $.extend( {
       previousButton: ".previous-btn",
       nextButton: ".next-btn",
@@ -12,7 +90,7 @@
       slidesContainer: ".slides",
       slideSelector: "li",
       onChangeHook: function(index) {}
-    }, options );
+    }, options);
 
     var $container = $(this);
     var $nextButton = $container.find(config.nextButton);
@@ -26,54 +104,31 @@
       var m = {};
 
       m.init = function() {
+        var transitionStrategy = new SamSlider.FadeTransition($slidesContainer, $slides);
+        m.controller =
+          new SamSlider.Controller(transitionStrategy, $slides.length, { circular: options.circular });
+
         m.showItem(0);
         buildPagination();
         attachControlsClickHandler();
 
-        if(config.auto) carousel();
+        if(config.auto) { carousel(); }
 
         return m;
       };
 
       m.goToNextSlide = function() {
-
-        var $visibleItemIndex = m.visibleSlide.index();
-        var $nextSlide = $slides.eq($visibleItemIndex+1);
-
-        if($nextSlide.length > 0)
-          m.showItem($visibleItemIndex+1);
-        else if (config.circular && $nextSlide.length == 0)
-          m.showItem(0);
-
-        if(config.auto) startCarousel();
+        m.controller.showNextNode();
+        if (config.auto) { startCarousel(); }
       };
 
       m.goToPreviousSlide = function() {
-        var $visibleItemIndex = m.visibleSlide.index();
-        var $previousSlide = $slides.eq($visibleItemIndex-1);
-
-        m.showItem($previousSlide.index());
-
-        if(config.auto) startCarousel();
+        m.controller.showPreviousNode();
+        if (config.auto) { startCarousel(); }
       };
 
       m.showItem = function (slideIndex) {
-        var $visibleSlide = $slides.filter(":visible");
-
-        if($visibleSlide.index() != slideIndex) {
-
-          $visibleSlide.fadeOut(250);
-          $slides.eq(slideIndex).delay(250).fadeIn(500);
-
-          m.visibleSlide = $slides.eq(slideIndex);
-
-          $paginationContainer.find(config.slideSelector+".active").removeClass("active");
-          $paginationContainer.find(config.slideSelector+":eq("+slideIndex+")").addClass("active");
-
-          if(config.auto) startCarousel();
-
-          config.onChangeHook(slideIndex);
-        }
+        m.controller.showNode(slideIndex);
       };
 
       var buildPagination = function() {
@@ -137,12 +192,12 @@
       goToNextSlide: function() {
         SliderModule.goToNextSlide();
       },
-        goToPreviousSlide: function() {
-          SliderModule.goToPreviousSlide();
-        },
-        goToSlide: function(slideIndex) {
-          SliderModule.showItem(slideIndex);
-        }
+      goToPreviousSlide: function() {
+        SliderModule.goToPreviousSlide();
+      },
+      goToSlide: function(slideIndex) {
+        SliderModule.showItem(slideIndex);
+      }
     };
   }
 })(jQuery);
