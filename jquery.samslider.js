@@ -153,7 +153,9 @@ SamSlider.Controller.prototype = {
 
     var carouselInterval,
         showingSlideEventName = "sam-slider:showing-slider",
-        showSlideEventName = "sam-slider:show-slide";
+        showSlideEventName = "sam-slider:show-slide",
+        nextSlideEventName = "sam-slider:next-slide",
+        previousSlideEventName = "sam-slider:previous-slide";
 
     var stopCarousel = function () {
       if (!options.auto) { return; }
@@ -221,9 +223,12 @@ SamSlider.Controller.prototype = {
       restartCarousel();
     });
 
+    // Listen external triggers
     $container.on(showSlideEventName, function (evt, slideIndex) {
       showSlide(slideIndex);
     });
+    $container.on(nextSlideEventName, goToNextSlide);
+    $container.on(previousSlideEventName, goToPreviousSlide);
 
     $slides.mouseenter(stopCarousel).mouseleave(startCarousel);
 
