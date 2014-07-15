@@ -113,7 +113,7 @@ SamSlider.Controller.prototype = {
       previousButtonSelector: ".previous-btn",
       nextButtonSelector: ".next-btn",
       auto: true,
-      speed: 2000,
+      interval: 2000,
       pagination: true,
       paginationContainerSelector: ".pagination-ctn",
       circular: true,
@@ -162,7 +162,7 @@ SamSlider.Controller.prototype = {
 
     var startCarousel = function () {
       if (!options.auto) { return; }
-      carouselInterval = setInterval(goToNextSlide, options.speed);
+      carouselInterval = setInterval(goToNextSlide, options.interval);
     };
 
     var restartCarousel = function () {
