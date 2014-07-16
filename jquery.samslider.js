@@ -1,3 +1,8 @@
+/*
+ * jQuery SamSlider v2.0.0
+ * https://github.com/samuelsimoes/SamSlider
+ */
+
 SamSlider = {};
 
 SamSlider.FadeTransition = function(rootNode, childrenNodes) {
