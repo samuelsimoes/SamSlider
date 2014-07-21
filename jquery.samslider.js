@@ -235,6 +235,8 @@ SamSlider.Controller.prototype = {
     $container.on(nextSlideEventName, goToNextSlide);
     $container.on(previousSlideEventName, goToPreviousSlide);
 
+    $(window).on("resize", $.proxy(transitionStrategy.onResize, transitionStrategy));
+
     $slides.mouseenter(stopCarousel).mouseleave(startCarousel);
 
     attachControlsEvents();
