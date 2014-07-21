@@ -6,7 +6,10 @@
 SamSlider = {};
 
 SamSlider.FadeTransition = function(rootNode, childrenNodes) {
+  this.rootNode = rootNode;
   this.nodes = childrenNodes;
+  this.fixSlidesContainerHeight();
+  this.nodes.not(":first-child").hide();
 };
 
 SamSlider.FadeTransition.prototype = {
@@ -18,6 +21,17 @@ SamSlider.FadeTransition.prototype = {
     }
 
     nodeToShow.delay(250).fadeIn(500);
+  },
+
+  // Fix the height in the root node to avoid the "flicking" when the root node
+  // becomes empty because of the slides transition.
+  fixSlidesContainerHeight: function () {
+    if (!this.nodes.length) { return; }
+    this.rootNode.css("height", this.nodes.first().height());
+  },
+
+  onResize: function () {
+    this.fixSlidesContainerHeight();
   }
 };
 

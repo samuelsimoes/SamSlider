@@ -39,10 +39,6 @@ To use SamSlider, you first need create the basic markup of your slider and add 
   margin: 0px;
   position: relative;
 }
-
-.container .slide {
-  display: none;
-}
 ```
 
 After this you need call the plugin:

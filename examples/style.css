@@ -11,10 +11,6 @@
   position: relative;
 }
 
-.container .slide {
-  display: none;
-}
-
 .container .pagination-ctn .active {
   font-size: 20px;
   font-weight: bold;
