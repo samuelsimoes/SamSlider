@@ -44,6 +44,12 @@ SamSlider.SlideTransition = function(rootNode, childrenNodes) {
 
 SamSlider.SlideTransition.prototype = {
   markupSetup: function () {
+    this.rootNode.css("overflow", "hidden");
+
+    if (["relative", "absolute"].indexOf(this.rootNode.css("position")) === -1) {
+      this.rootNode.css("position", "relative");
+    }
+
     // Wrap all nodes in a single node which will be movemented
     this.slideNode =
       $("<div>").
